@@ -1,0 +1,18 @@
+---
+- hosts: all
+  tasks:
+  - name: ping
+    copy: dest=/home/vagrant/answerstolife.txt content=meJustPinging
+  - name: clone ping app from git
+    git: 
+      repo: 'https://github.com/ErinBailey/ping.git'
+      dest: /home/vagrant/ping
+  - name: installing ruby
+    shell: sudo apt-get install ruby-full
+    become: true
+  - name: start the app
+    service:
+      name: pingapp
+      state: started
+      enabled: yes
+    become: true
